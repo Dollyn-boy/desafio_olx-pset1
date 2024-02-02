@@ -1,5 +1,7 @@
+import pycep_correios
+
 class Usuario:
-   def __init__(self, nome, email, user, telefone, senha):
+    def __init__(self, nome, email, user, telefone, senha):
         self.nome = nome
         self.user = user
         self.telefone = telefone
@@ -8,8 +10,18 @@ class Usuario:
         self.enderecos = []
     
     def inserir_enderoco(self, cep):
-       self.enderecos.append(Endereco(cep))
+        self.enderecos.append(Endereco(cep))
+    
+    def lista_enderecos(self):
+        for endereco in self.enderecos:
+            print(f"{endereco.cidade}, {endereco.uf}, {endereco.bairro}")
 
 class Endereco:
     def __init__(self, cep):
-        self.cep
+        try:
+            endereco = pycep_correios.consultar_cep(cep)
+            self.cidade = endereco['cidade']
+            self.uf = endereco['uf']
+            self.bairro = endereco['bairro']
+        except CEPInvalido as exc:
+            print(exc)
