@@ -23,5 +23,5 @@ class Endereco:
             self.cidade = endereco['cidade']
             self.uf = endereco['uf']
             self.bairro = endereco['bairro']
-        except CEPInvalido as exc:
-            print(exc)
+        except pycep_correios.CEPInvalido as exc:
+            print(exc) 
