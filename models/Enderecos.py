@@ -1,4 +1,5 @@
 import requests
+
 class Endereco:
     def __init__(self, cep):
         cep = cep.replace("-", "").replace(".", "")
@@ -12,4 +13,4 @@ class Endereco:
             self.uf = dict_requisicao['uf']
         else:
             print("Cep Inválido")
-    
+

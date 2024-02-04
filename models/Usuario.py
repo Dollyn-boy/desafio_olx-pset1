@@ -2,26 +2,48 @@ from Enderecos import Endereco
 from Produto import Produto
 from abc import ABC, abstractmethod
 
-class ComportamentoDoUsuario:
+
+class ComportamentoDoUsuario(ABC):
+
+    def __init__(self, usuario):
+        self.usuario = usuario
+
+    #Interface diferenciada pela quantidade de métodos passados(cortesia do chat gpt)
     @abstractmethod
-    def executar(self, usuario):
+    def executar(self, *args, **kwargs):
         pass
 
-class ComportamenVendedor(ComportamentoDoUsuario):
-    def executar(self, usuario):
-        usuario.produtos_cadastrados = [] 
 
-class Comp
+class ComportamentoVendedor(ComportamentoDoUsuario):
+    def __init__(self, usuario):
+        super().__init__(usuario)
+
+    def executar(self, nome, descricao, preco, tipo, index_endereco):
+        index_endereco-=1
+        endereco = self.usuario.escolher_endereco(index_endereco)
+        produto = Produto(nome, descricao, preco, self.usuario.user, tipo, endereco)
+        self.usuario.produtos_cadastrados.append(produto)
+        print("Deu Bom")
+class ComportamentoComprador(ComportamentoDoUsuario):
+    #Implementa interface para "comentar_produto"
+    def __init__(self, usuario):
+        super().__init__(usuario)
+
+    def executar(self ,produto):
+        comentario = input("Comentar: ")
+        produto.comentarios.append(comentario)
+        
         
 class Usuario:
-    def __init__(self, nome, email, user, telefone, senha, comportamento):
+    def __init__(self, nome, email, user, telefone, senha):
         self.nome = nome
         self.user = user
         self.telefone = telefone
         self.email = email
         self.__senha = senha
         self.enderecos = []
-        self.comportamento = comportamento
+        self.produtos_cadastrados = []  
+        self.comportamento = None
     
     @property 
     def senha(self):
@@ -31,7 +53,8 @@ class Usuario:
     def senha(self, nova_senha):
         self.__senha = nova_senha
     
-    def inserir_enderoco(self, cep):
+    #Método que instancia um ou + endereços pro usuário 
+    def inserir_endereco(self, cep):
         self.enderecos.append(Endereco(cep))
     
     def lista_enderecos(self):
@@ -42,15 +65,8 @@ class Usuario:
     def escolher_endereco(self, index):
         return self.enderecos[index]
 
-    def executar_comportamento(self):
-        self.comportamento.executar(self)
-        
-class Vendedor(Usuario):
-    def __init__(self, nome, email, user, telefone, senha):
-        super().__init__(nome, email, user, telefone, senha)
-        self.produtos_cadastrados = []
-    
-    def cadastrar_produtos(self, nome, descricao, preco, tipo, index_endereco):
-        usuario = super().user
-        enderecos = super().enderecos
-        self.produtos_cadastrados.append(Produto(nome, descricao, preco, usuario, tipo, enderecos(index_endereco)))        
+    def modo_vendedor(self):
+            self.comportamento = ComportamentoVendedor(self)
+
+    def executar_comportamento(self, *args, **kwargs):
+        self.comportamento.executar(*args, **kwargs)
