@@ -16,7 +16,7 @@ class Usuario:
     def senha(self, nova_senha):
         self.__senha = nova_senha
     
-    def inserir_enderoco(self, cep):
+    def inserir_endereco(self, cep):
         self.enderecos.append(Endereco(cep))
     
     def lista_enderecos(self):
