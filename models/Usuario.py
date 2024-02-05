@@ -22,8 +22,9 @@ class ComportamentoVendedor(ComportamentoDoUsuario):
         index_endereco-=1
         endereco = self.usuario.escolher_endereco(index_endereco)
         produto = Produto(nome, descricao, preco, self.usuario.user, tipo, endereco)
+        produto.atualizar_estoque()
         self.usuario.produtos_cadastrados.append(produto)
-        print("Deu Bom")
+
 class ComportamentoComprador(ComportamentoDoUsuario):
     #Implementa interface para "comentar_produto"
     def __init__(self, usuario):
@@ -43,7 +44,7 @@ class Usuario:
         self.__senha = senha
         self.enderecos = []
         self.produtos_cadastrados = []  
-        self.comportamento = None
+        self.comportamento = ComportamentoComprador(self)
     
     @property 
     def senha(self):
