@@ -8,5 +8,6 @@ class Anuncio:
         self.local = local
         self.user = user
         self.data = datetime.now()
+        self.comentarios = []
         self.id = Anuncio.id
         Anuncio.id += 1
