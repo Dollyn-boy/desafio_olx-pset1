@@ -7,8 +7,8 @@ class Produto:
         self.id_vendedor = id_vendedor
         self.tipo = tipo
         self.cidade_estado = cidade_estado
-        self.comentarios = []
-        self.quantidade = 1
+        self.comentarios = [] 
+        self.quantidade = 0
     
     def atualizar_estoque(self):
         estoque = Estoque()

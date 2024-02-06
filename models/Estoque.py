@@ -14,6 +14,7 @@ class Estoque:
             produto.quantidade+=1
         else:
             self.produtos_disponiveis.append(produto)
+            produto.quantidade+=1
     
     def remover_produto(self, produto):
         if produto in self.produtos_disponiveis:
@@ -26,6 +27,7 @@ class Estoque:
         print("Disponíveis")
         for produto in self.produtos_disponiveis:
             print(produto.nome + " - " + str(produto.quantidade))
+        print("-------------")
         print("Vendidos")
         for produto in self.produtos_vendidos:
             print(produto.nome + " - " + str(produto.quantidade))
