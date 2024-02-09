@@ -2,11 +2,12 @@ import datetime
 
 class Anuncio:
     id = 1
-    def __init__(self, produto, legenda, local, user):
+    def __init__(self, produto, legenda, cidade, uf, vendedor):
         self.produto = produto
         self.legenda = legenda
-        self.local = local
-        self.user = user
+        self.cidade = cidade
+        self.uf = uf
+        self.vendedor = vendedor
         self.data = datetime.now()
         self.comentarios = []
         self.id = Anuncio.id

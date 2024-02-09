@@ -7,8 +7,8 @@ from models.Estoque import Estoque
 def criar_usuario(nome, email, user, telefone, senha):
     user = Usuario(nome, email, user, telefone, senha)
     if not user:
-        return "User já existe. Insira outro."
-    
+        return "Usuário já existe."
+
 def atualizar_estoque(produto):
     estoque = Estoque()
     estoque.produtos_disponiveis.append(produto)
@@ -21,6 +21,9 @@ def criar_produto(usuario: Usuario, nome, descricao, preco, tipo):
 def criar_anuncio(vendedor:Usuario, cep: str, num_produto: int):
     endereco = Endereco(cep)
     legenda = input("Inseir legenda do Anúncio: ")
-    anuncio = Anuncio(vendedor.produtos[num_produto], legenda, endereco, vendedor.user)
+    anuncio = Anuncio(vendedor.produtos[num_produto], legenda, endereco.cidade, endereco.uf, vendedor)
     vendedor.fazer_anuncio(anuncio)
     atualizar_estoque(vendedor.produtos[num_produto])
+
+def realizar_transacao(Usuario: Usuario, anuncio:Anuncio):
+    ...
