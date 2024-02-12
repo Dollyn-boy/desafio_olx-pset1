@@ -7,6 +7,7 @@ class Usuario:
             raise ValueError("User já existe")
         self.user = user
         self.telefone = telefone
+        self._carteira = 100
         self.email = email
         self.__senha = senha
         self._estado = EstadoComprador()
@@ -14,15 +15,22 @@ class Usuario:
         self.anuncios = []
 
     @property 
-    def senha(self):
-        return self.__senha
+    def carteira(self):
+        return self._carteira
     
-    @senha.setter
-    def senha(self, nova_senha):
-        self.__senha = nova_senha
+    @carteira.setter
+    def carteira(self, novo_valor):
+        self._carteira = novo_valor
     
     def mudar_estado(self):
         self.estado.switch(self)
+
+    def listar_produtos(self):
+        for produto in self.produtos:
+            contador = 1
+            print(f"{contador}-{produto.nome}|{produto.descricao}|{produto.tipo}")
+            conrador+=1
+            
 
 class EstadoDoUser:
         def switch(self, user):
