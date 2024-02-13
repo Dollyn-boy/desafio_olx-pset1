@@ -1,5 +1,6 @@
 
-from Persistencia import Persistencia
+from .Persistencia import Persistencia
+
 class Usuario:
     def __init__(self, nome, email, user, telefone, senha):
         self.nome = nome
@@ -7,7 +8,7 @@ class Usuario:
             raise ValueError("User já existe")
         self.user = user
         self.telefone = telefone
-        self._carteira = 100
+        self._carteira = 0
         self.email = email
         self.__senha = senha
         self._estado = EstadoComprador()

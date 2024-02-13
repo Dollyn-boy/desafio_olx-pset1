@@ -1,4 +1,4 @@
-class Persistencia():
+class Persistencia:
 
     _instancia = None
 
