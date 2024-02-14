@@ -24,13 +24,13 @@ class Usuario:
         self._carteira = novo_valor
     
     def mudar_estado(self):
-        self.estado.switch(self)
+        self._estado.switch(self)
 
     def listar_produtos(self):
         for produto in self.produtos:
             contador = 1
-            print(f"{contador}-{produto.nome}|{produto.descricao}|{produto.tipo}")
-            conrador+=1
+            print(f"{contador}- {produto.nome} | {produto.descricao} | {produto.tipo}")
+            contador+=1
             
 
 class EstadoDoUser:
@@ -46,7 +46,7 @@ class EstadoComprador(EstadoDoUser):
         user.produtos.append(produto)
 
     def fazer_anuncio(self, user, produto):
-        print("Você não pode fazer um anúncio no estado de Comprador. Mude para o modo Vendedor.")
+        raise ValueError("Você não pode fazer um anúncio no estado de Comprador. Mude para o modo Vendedor.")
 
 
 class EstadoVendedor(EstadoDoUser):

@@ -25,3 +25,6 @@ class Estoque:
             except IndexError:
                 print("Produto indisponível")
     
+    def listar_estoque(self):
+        for produto in self._instancia.produtos_disponiveis:
+            print(produto.nome)

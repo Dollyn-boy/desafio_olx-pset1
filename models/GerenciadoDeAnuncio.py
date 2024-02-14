@@ -18,6 +18,11 @@ class GerenciadoDeAnuncio:
     def pesquisar_anuncios(self, estrategia ,termo):
         return estrategia.buscar(self.anuncios, termo)
     
+    def listar_anuncios(self):
+        for anuncio in self.anuncios:
+            if anuncio.is_disponivel():
+                print(f"{anuncio.produto.nome} | R${anuncio.preco} | {anuncio.produto.tipo} | {anuncio.cidade} - {anuncio.uf} | {anuncio.data} ")
+    
 
 
 class EstrategiaBuscar(ABC):
