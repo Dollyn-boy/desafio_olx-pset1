@@ -74,6 +74,20 @@ def pesquisar_anuncios(estrategia, termo_buscado):
 
     return resultados
 
+def selecionar_anuncio(resultados):
+    while True:
+        try:
+            index = int(input("Selecione o anúncio: "))
+            return resultados[index - 1]
+        except (ValueError, IndexError, EOFError):
+            print("Valor Inválido")
+
+def fazer_comentario(usuario: Usuario, anuncio: Anuncio):
+    comentario = input("Digite Aqui: ")
+    try:
+        usuario._estado.comentar_anuncio(anuncio, comentario)
+    except ValueError:
+        print("Você não pode comentar um anúncio no estado de Vededor. Mude para o modo Comprador")
 
 def realizar_transacao(usuario: Usuario, anuncio:Anuncio):
     transador = Transacao()
@@ -90,7 +104,9 @@ def main():
     user2 = criar_usuario("Jao", "ele@gmail.com", "johnga", 7458997, "joghsu231")
 
     user1.mudar_estado(EstadoVendedor())
-    user2.mudar_estado(EstadoVendedor())
+    user2.mudar_estado(EstadoComprador())
+
+    user2.carteira = 100000000
 
     criar_produto(user1, "Espada de Grama", "Item Almadiçoado", "Arma")
     criar_produto(user1, "Buraco Negro em minuatura", "-NÃO SE APROXIME-", "Corpo Celeste")
@@ -99,6 +115,17 @@ def main():
     criar_anuncio(user1, "44640000", 2)
     criar_anuncio(user1, "44640000", 3)
 
+    resultados = pesquisar_anuncios("todo", "arma")
+    if resultados:
+        anuncio_selecionado = selecionar_anuncio(resultados)
+        escolha = input(" {1 -Comentar}      {2 -Comprar} \n>>")
+        if escolha == "1":
+            print()
+            fazer_comentario(user2 ,anuncio_selecionado)
+        else:
+            print()
+            realizar_transacao(user2, anuncio_selecionado)
+    
     resultados = pesquisar_anuncios("todo", "arma")
  
 

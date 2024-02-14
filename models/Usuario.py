@@ -58,8 +58,8 @@ class EstadoComprador(EstadoDoUser):
     def fazer_anuncio(self, user, produto):
         raise ValueError("Você não pode fazer um anúncio no estado de Comprador. Mude para o modo Vendedor.")
 
-    def comentar_anuncio(self, user, anuncio):
-        pass
+    def comentar_anuncio(self, anuncio, comentario):
+        anuncio.comentarios.append(comentario)
 
 
 
@@ -72,6 +72,6 @@ class EstadoVendedor(EstadoDoUser):
     def fazer_anuncio(self, user, anuncio):
         user.anuncios.append(anuncio)
 
-    def comentar_anuncio(self, user, anuncio):
+    def comentar_anuncio(self, anuncio, comentario):
         raise ValueError("Você não pode comentar um anúncio no estado de Vededor. Mude para o modo Comprador")
 

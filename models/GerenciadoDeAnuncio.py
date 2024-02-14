@@ -9,7 +9,7 @@ class GerenciadoDeAnuncio:
             GerenciadorDeAnuncio._instancia = GerenciadorDeAnuncio()
         return GerenciadorDeAnuncio._instancia
     
-    
+
     def __init__(self):
         self.anuncios = []
 
@@ -23,8 +23,9 @@ class GerenciadoDeAnuncio:
     
 
     def mostrar_comentarios(self, anuncio):
+        print("     Comentários:")
         for comentario in anuncio.comentarios:
-            print(comentario)
+            print(f"        Anônimo - {comentario}")
         
 
     def mostrar_resultado(self, resultados):
@@ -32,9 +33,10 @@ class GerenciadoDeAnuncio:
             print("Nenhum resultado foi encontrado.")
         else:
             for resultado in resultados:
+                print("="*25)
                 print(f"> {resultado.produto.nome.title()} | R${resultado.preco} | {resultado.produto.tipo} | {resultado.vendedor.nome} | {resultado.cidade} - {resultado.uf} | {resultado.data} ")
                 self.mostrar_comentarios(resultado)
-    
+                print("="*25)
 
 class EstrategiaBuscar(ABC):
     @abstractmethod
