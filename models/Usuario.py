@@ -1,17 +1,17 @@
 
-from .Persistencia import Persistencia
+from .GerenciadorDeUsuario import GerenciadoDeUsuario
 
 class Usuario:
-    def __init__(self, nome, email, user, telefone, senha):
+    def __init__(self, nome, email, user, telefone, senha, estado):
         self.nome = nome
-        if user in Persistencia.get_instance().get_usuarios():
+        if user in GerenciadoDeUsuario.get_instance().get_usuarios():
             raise ValueError("User já existe")
         self.user = user
         self.telefone = telefone
         self._carteira = 0
         self.email = email
         self.__senha = senha
-        self._estado = EstadoComprador()
+        self._estado = estado
         self.produtos = []
         self.anuncios = []
 
@@ -25,12 +25,13 @@ class Usuario:
 
     def exibir_status(self):
         print("="*25)
-        print(f"{self.nome} | R${self.carteira} \nProdutos :")
+        print(f"{self.nome} | R${self.carteira} | R$ {self._estado.nome} \nProdutos :")
         self.listar_produtos()
         print("="*25)
     
-    def mudar_estado(self):
-        self._estado.switch(self)
+    def mudar_estado(self, novo_estado):
+        self._estado = novo_estado
+        print(f"Estado {novo_estado.nome} ativado")
 
     def listar_produtos(self):
         if not self.produtos:
@@ -43,13 +44,13 @@ class Usuario:
                 
 
 class EstadoDoUser:
+        nome = ""
+
         def switch(self, user):
             ...
 
 class EstadoComprador(EstadoDoUser):
-    def switch(self, user):
-        user._estado = EstadoVendedor()
-        print("Modo Vendedor Ativado")
+    nome = "Comprador"
 
     def cadastrar_produto(self, user, produto):
         user.produtos.append(produto)
@@ -57,16 +58,20 @@ class EstadoComprador(EstadoDoUser):
     def fazer_anuncio(self, user, produto):
         raise ValueError("Você não pode fazer um anúncio no estado de Comprador. Mude para o modo Vendedor.")
 
+    def comentar_anuncio(self, user, anuncio):
+        pass
+
+
 
 class EstadoVendedor(EstadoDoUser):
-     
-    def switch(self, user):
-        user._estado = EstadoComprador()
-        print("Modo Comprador Ativado")
+    nome = "Vendedor"
 
     def cadastrar_produto(self, user, produto):
         user.produtos.append(produto)
 
     def fazer_anuncio(self, user, anuncio):
         user.anuncios.append(anuncio)
+
+    def comentar_anuncio(self, user, anuncio):
+        raise ValueError("Você não pode comentar um anúncio no estado de Vededor. Mude para o modo Comprador")
 

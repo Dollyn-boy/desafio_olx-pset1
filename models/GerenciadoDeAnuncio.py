@@ -9,21 +9,32 @@ class GerenciadoDeAnuncio:
             GerenciadorDeAnuncio._instancia = GerenciadorDeAnuncio()
         return GerenciadorDeAnuncio._instancia
     
+    
     def __init__(self):
         self.anuncios = []
+
 
     def adicionar_anuncio(self, anuncio):
         self.anuncios.append(anuncio)
     
+
     def pesquisar_anuncios(self, estrategia ,termo):
         return estrategia.buscar(self.anuncios, termo)
     
-    def listar_anuncios(self):
-        for anuncio in self.anuncios:
-            if anuncio.is_disponivel():
-                print(f"{anuncio.produto.nome} | R${anuncio.preco} | {anuncio.produto.tipo} | {anuncio.cidade} - {anuncio.uf} | {anuncio.data} ")
-    
 
+    def mostrar_comentarios(self, anuncio):
+        for comentario in anuncio.comentarios:
+            print(comentario)
+        
+
+    def mostrar_resultado(self, resultados):
+        if not resultados:
+            print("Nenhum resultado foi encontrado.")
+        else:
+            for resultado in resultados:
+                print(f"> {resultado.produto.nome.title()} | R${resultado.preco} | {resultado.produto.tipo} | {resultado.vendedor.nome} | {resultado.cidade} - {resultado.uf} | {resultado.data} ")
+                self.mostrar_comentarios(resultado)
+    
 
 class EstrategiaBuscar(ABC):
     @abstractmethod
@@ -38,4 +49,7 @@ class BuscarPorTipo(EstrategiaBuscar):
     def buscar(self, anuncios, termo):
         return [anuncio for anuncio in anuncios if termo.lower() in anuncio.produto.tipo.lower()]
 
+class BuscarTodos(EstrategiaBuscar):
+    def buscar(self, anuncios, termo):
+        return [anuncio for anuncio in anuncios]
 

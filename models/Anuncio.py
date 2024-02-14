@@ -2,10 +2,9 @@ from datetime import datetime
 
 class Anuncio:
     id = 1
-    def __init__(self, produto, preco , legenda, cidade, uf, vendedor):
+    def __init__(self, produto, preco , cidade, uf, vendedor):
         self.produto = produto
         self.preco = preco
-        self.legenda = legenda
         self.cidade = cidade
         self.uf = uf
         self.vendedor = vendedor
