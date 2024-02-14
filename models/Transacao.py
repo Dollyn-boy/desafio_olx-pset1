@@ -12,6 +12,7 @@ class Transacao:
                 usuario.carteira -= anuncio.preco
                 anuncio.vendedor.carteira += anuncio.preco
                 print("Transação Concluída")
+                usuario.exibir_status()
                 #atualiza estado do anuncio
                 anuncio.vender()
             else:

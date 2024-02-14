@@ -20,18 +20,27 @@ class Usuario:
         return self._carteira
     
     @carteira.setter
-    def carteira(self, novo_valor):
+    def carteira(self, novo_valor: int):
         self._carteira = novo_valor
+
+    def exibir_status(self):
+        print("="*25)
+        print(f"{self.nome} | R${self.carteira} \nProdutos :")
+        self.listar_produtos()
+        print("="*25)
     
     def mudar_estado(self):
         self._estado.switch(self)
 
     def listar_produtos(self):
-        for produto in self.produtos:
-            contador = 1
-            print(f"{contador}- {produto.nome} | {produto.descricao} | {produto.tipo}")
-            contador+=1
-            
+        if not self.produtos:
+            print("Vazio!")
+        else:
+            for produto in self.produtos:
+                contador = 1
+                print(f"{contador}- {produto.nome} | {produto.descricao} | {produto.tipo}")
+                contador+=1
+                
 
 class EstadoDoUser:
         def switch(self, user):

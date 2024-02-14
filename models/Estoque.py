@@ -26,5 +26,20 @@ class Estoque:
                 print("Produto indisponível")
     
     def listar_estoque(self):
-        for produto in self._instancia.produtos_disponiveis:
-            print(produto.nome)
+        print("Estoque:")
+        print("-"*25)
+        print("Produtos Disponíveis: ")
+        if not self._instancia.produtos_disponiveis:
+            print("Estoque Vazio!")
+        else:
+            for produto in self._instancia.produtos_disponiveis:
+                print(produto.nome)
+        print("-"*25)
+        print("Produtos Vendidos: ")
+        if not self._instancia.produtos_vendidos:
+            print("Nenhuma Venda foi realizada!")
+        else:
+            for produto in self._instancia.produtos_vendidos:
+                print(produto.nome)
+        print("-"*25)
+        

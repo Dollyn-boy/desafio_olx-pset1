@@ -65,11 +65,12 @@ def pesquisar_anuncios(estrategia, termo_buscado):
 
     gerenciador = GerenciadoDeAnuncio.get_instance()
     resultados = gerenciador.pesquisar_anuncios(estrategia_selecionada, termo_buscado)
-    try:
+
+    if not resultados:
+        print("Nenhum resultado foi encontrado.")
+    else:
         for resultado in resultados:
             print(f"{resultado.produto.nome} | R${resultado.preco} | {resultado.produto.tipo} | {resultado.cidade} - {resultado.uf} | {resultado.data} ")
-    except IndexError:
-        print("Nenhum resultado foi encontrado.")
 
 
 def realizar_transacao(usuario: Usuario, anuncio:Anuncio):
@@ -79,6 +80,7 @@ def realizar_transacao(usuario: Usuario, anuncio:Anuncio):
     
 def main():
     gerenciador = GerenciadoDeAnuncio.get_instance()
+    estoque = Estoque.get_instance()
     user1 = criar_usuario("Vitor", "eu@gmail.com", "vithu", 1233123, "vulto")
     user2 = criar_usuario("Jao", "ele@gmail.com", "johnga", 7458997, "joghsu231")
     Persistencia.get_instance().list_usuarios()
@@ -86,16 +88,14 @@ def main():
 
     user1.mudar_estado()
     user2.mudar_estado()
-    criar_produto(user1, "Terra Blade", "Espada final da terra", "Arma")
     criar_produto(user2, "Night`s edge", "Lâmina da noite", "Arma")
-    criar_anuncio(user1, "95555000", 1 )
-    criar_anuncio(user2, "95555000", 1 )
+    criar_anuncio(user1, "95555000", 1)
+    criar_anuncio(user2, "95555000", 1)
+    user1.carteira = 100000
+    realizar_transacao(user1, user2.anuncios[0])
+    user2.exibir_status()
+    estoque.listar_estoque()
  
-    gerenciador.pesquisar_anuncios("tipo","Arma")
-
-
-    
-    pass
 
 if __name__ =="__main__":
     main()    
