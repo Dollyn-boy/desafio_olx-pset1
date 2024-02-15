@@ -19,7 +19,12 @@ class GerenciadoDeAnuncio:
     
 
     def pesquisar_anuncios(self, estrategia ,termo):
-        return estrategia.buscar(self.anuncios, termo)
+        resultados_validos = []
+        resultados = estrategia.buscar(self.anuncios, termo)
+        for resultado in resultados:
+            if resultado.is_disponivel():
+                resultados_validos.append(resultado)
+        return resultados_validos
     
 
     def mostrar_comentarios(self, anuncio):
@@ -37,6 +42,8 @@ class GerenciadoDeAnuncio:
                 print(f"> {resultado.produto.nome.title()} | R${resultado.preco} | {resultado.produto.tipo} | {resultado.vendedor.nome} | {resultado.cidade} - {resultado.uf} | {resultado.data} ")
                 self.mostrar_comentarios(resultado)
                 print("="*25)
+
+
 
 class EstrategiaBuscar(ABC):
     @abstractmethod

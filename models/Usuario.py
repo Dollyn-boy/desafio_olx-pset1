@@ -10,10 +10,15 @@ class Usuario:
         self.telefone = telefone
         self._carteira = 0
         self.email = email
-        self.__senha = senha
+        self._senha = senha
         self._estado = estado
         self.produtos = []
         self.anuncios = []
+
+    @property 
+    def senha(self):
+        return self._senha
+
 
     @property 
     def carteira(self):
@@ -25,7 +30,7 @@ class Usuario:
 
     def exibir_status(self):
         print("="*25)
-        print(f"{self.nome} | R${self.carteira} | R$ {self._estado.nome} \nProdutos :")
+        print(f"{self.nome} | R${self.carteira} | R$ {self._estado.nome} \n\nProdutos :")
         self.listar_produtos()
         print("="*25)
     
@@ -45,9 +50,6 @@ class Usuario:
 
 class EstadoDoUser:
         nome = ""
-
-        def switch(self, user):
-            ...
 
 class EstadoComprador(EstadoDoUser):
     nome = "Comprador"

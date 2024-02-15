@@ -7,15 +7,30 @@ from models.Transacao import Transacao
 from models.GerenciadorDeUsuario import GerenciadoDeUsuario
 from models.GerenciadoDeAnuncio import GerenciadoDeAnuncio, BuscarPorNome, BuscarPorTipo, BuscarTodos
 
+
+ESTADO_COMPRADOR = EstadoComprador()
+ESTADO_VENDEDOR = EstadoVendedor()
+
 #Cria usuário com estado comprador pré-definido
 def criar_usuario(nome, email, user, telefone, senha):
-    user = Usuario(nome, email, user, telefone, senha, EstadoComprador())
+    user = Usuario(nome, email, user, telefone, senha, ESTADO_COMPRADOR)
     if not user:
         return "Usuário já existe."
     else:
         GerenciadoDeUsuario.get_instance().add_usuario(user)
         return user
 
+def verificar_usuario(email, senha):
+    usuarios = GerenciadoDeUsuario.get_instance().get_usuarios()
+    if usuarios:
+        for usuario in usuarios:
+            if usuario.email == email or usuario.senha == senha:
+                print("Login bem sucedido!")
+                return usuario
+    print("ERRO: Email e/ou senha inválidos")
+
+def pegar_usuario():
+    return GerenciadoDeUsuario.get_instance().get_usuarios()    
 
 def atualizar_estoque(produto, operacao):
     estoque = Estoque()
@@ -81,6 +96,21 @@ def selecionar_anuncio(resultados):
             return resultados[index - 1]
         except (ValueError, IndexError, EOFError):
             print("Valor Inválido")
+    
+
+def escolher_acao(usuario, anuncio_selecionado):
+    escolha = input(" {1 -Comentar}      {2 -Comprar}       {sair}\n>>")
+    if escolha == "1":
+            print()
+            fazer_comentario(usuario ,anuncio_selecionado)
+    elif escolha == "2":
+            print()
+            realizar_transacao(usuario, anuncio_selecionado)
+    else:
+        print()
+        print("Saindo...")
+    
+
 
 def fazer_comentario(usuario: Usuario, anuncio: Anuncio):
     comentario = input("Digite Aqui: ")
@@ -89,6 +119,7 @@ def fazer_comentario(usuario: Usuario, anuncio: Anuncio):
     except ValueError:
         print("Você não pode comentar um anúncio no estado de Vededor. Mude para o modo Comprador")
 
+
 def realizar_transacao(usuario: Usuario, anuncio:Anuncio):
     transador = Transacao()
     transador.realizar_transacao(usuario, anuncio)
@@ -96,38 +127,7 @@ def realizar_transacao(usuario: Usuario, anuncio:Anuncio):
 
     
 def main():
-    gerenciador_anuncio = GerenciadoDeAnuncio.get_instance()
-    gerenciador_usuario = GerenciadoDeUsuario.get_instance()
-    estoque = Estoque.get_instance()
-
-    user1 = criar_usuario("Vitor", "eu@gmail.com", "vithu", 1233123, "vulto")
-    user2 = criar_usuario("Jao", "ele@gmail.com", "johnga", 7458997, "joghsu231")
-
-    user1.mudar_estado(EstadoVendedor())
-    user2.mudar_estado(EstadoComprador())
-
-    user2.carteira = 100000000
-
-    criar_produto(user1, "Espada de Grama", "Item Almadiçoado", "Arma")
-    criar_produto(user1, "Buraco Negro em minuatura", "-NÃO SE APROXIME-", "Corpo Celeste")
-    criar_produto(user1, "Espada Grande do Luar", "Espada mágica", "Arma")
-    criar_anuncio(user1, "44640000", 1)
-    criar_anuncio(user1, "44640000", 2)
-    criar_anuncio(user1, "44640000", 3)
-
-    resultados = pesquisar_anuncios("todo", "arma")
-    if resultados:
-        anuncio_selecionado = selecionar_anuncio(resultados)
-        escolha = input(" {1 -Comentar}      {2 -Comprar} \n>>")
-        if escolha == "1":
-            print()
-            fazer_comentario(user2 ,anuncio_selecionado)
-        else:
-            print()
-            realizar_transacao(user2, anuncio_selecionado)
-    
-    resultados = pesquisar_anuncios("todo", "arma")
- 
+    pass
 
 if __name__ =="__main__":
     main()    

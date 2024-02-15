@@ -12,4 +12,5 @@ class Endereco:
             self.cidade = dict_requisicao['localidade']
             self.uf = dict_requisicao['uf']
         else:
-            print("Cep Inválido")
+            raise ValueError
+            
