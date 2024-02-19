@@ -68,8 +68,8 @@ def mostrar_perfil(user):
             user.mudar_estado(ESTADO_VENDEDOR)
         else:
             user.mudar_estado(ESTADO_COMPRADOR)
-    else:
-        acessar_homepage(user)
+
+    acessar_homepage(user)
 
 def manipular_produtos(user):
     print("Produtos: ")
@@ -102,6 +102,8 @@ def main():
     user1 = criar_usuario("Vitor", "vitor@gmail.com", "vithu", "9999999", "aipim")
     user2 = criar_usuario("Pedro", "pedro@gmail.com", "rujinho", "9234565", "arveis")
     user3 = criar_usuario("John", "johzi@gmail.com", "jaum", "8124590", "imas")
+
+    user1.carteira = 1000000
 
     user1.mudar_estado(ESTADO_VENDEDOR)
     user2.mudar_estado(ESTADO_VENDEDOR)
