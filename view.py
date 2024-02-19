@@ -45,15 +45,19 @@ def acessar_homepage(user):
 
 def pesquisar(user):
     print("\n Filtros:  {Nome}  {Tipo}  {Todos}")
+    termo = ""
     estrategia = input(">>").strip().lower()
     if estrategia not in ["nome", "tipo", "todos"]:
         print("Filtro Inválido")
         acessar_homepage(user)
-    termo = "Pesquisar: "
+    if estrategia != "todos":
+        termo = input("Pesquisar: ")
     resultados = pesquisar_anuncios(estrategia, termo)
     if resultados:
         anuncio_selecionado = selecionar_anuncio(resultados)
-        escolher_acao(anuncio_selecionado, user)
+        escolher_acao(user ,anuncio_selecionado)
+        acessar_homepage(user)
+
 
 def mostrar_perfil(user):
     user.exibir_status()
@@ -64,6 +68,8 @@ def mostrar_perfil(user):
             user.mudar_estado(ESTADO_VENDEDOR)
         else:
             user.mudar_estado(ESTADO_COMPRADOR)
+    else:
+        acessar_homepage(user)
 
 def manipular_produtos(user):
     print("Produtos: ")
@@ -81,16 +87,30 @@ def manipular_produtos(user):
             try:
                 num_produto = int(input("Selecione o número correspondete ao produto desejado: "))
                 cep = input("Inserir CEP: ")
+                preco = float(input("Definir Preço: "))
                 break
-            except ValueError:
+            except (ValueError):
                 print("Valores Inválidos")
-        criar_anuncio(user, cep ,num_produto)
+
+        criar_anuncio(user, cep ,num_produto, preco)
+    else:
+        acessar_homepage(user)
  
 def main():
     
-    criar_usuario("Vitor", "vitor@gmail.com", "vithu", "9999999", "aipim")
-    criar_usuario("Pedro", "pedro@gmail.com", "rujinho", "9234565", "arveis")
-    criar_usuario("John", "johzi@gmail.com", "jaum", "8124590", "imas")
+    
+    user1 = criar_usuario("Vitor", "vitor@gmail.com", "vithu", "9999999", "aipim")
+    user2 = criar_usuario("Pedro", "pedro@gmail.com", "rujinho", "9234565", "arveis")
+    user3 = criar_usuario("John", "johzi@gmail.com", "jaum", "8124590", "imas")
+
+    user1.mudar_estado(ESTADO_VENDEDOR)
+    user2.mudar_estado(ESTADO_VENDEDOR)
+
+    criar_produto(user1, "espada de grama", "item amaldiçoado", "arma")
+    criar_anuncio(user1, "65990000" ,1, 19.99)
+
+    criar_produto(user2, "doritos", "spicy shit", "comida")
+    criar_anuncio(user2, "44640000" ,1, 12.99)
 
 
     fig = Figlet(font="slant")

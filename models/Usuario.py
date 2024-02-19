@@ -39,11 +39,11 @@ class Usuario:
         print(f"Estado {novo_estado.nome} ativado")
 
     def listar_produtos(self):
+        contador = 1
         if not self.produtos:
             print("Vazio!")
         else:
             for produto in self.produtos:
-                contador = 1
                 print(f"{contador}- {produto.nome} | {produto.descricao} | {produto.tipo}")
                 contador+=1
                 

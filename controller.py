@@ -42,21 +42,22 @@ def criar_produto(usuario: Usuario, nome, descricao, tipo):
     usuario._estado.cadastrar_produto(usuario, produto)
 
 
-def criar_anuncio(vendedor:Usuario, cep: str, num_produto: int):
-        endereco = Endereco(cep)
+def criar_anuncio(vendedor:Usuario, cep: str, num_produto: int, preco:float):
         gerenciador_anuncio = GerenciadoDeAnuncio.get_instance()
 
-        while True:
-            try:
-                preco = float(input("Definir Preço: "))
-                break
-            except ValueError:
-                print("Valor Inválido")
+        try:    
+            endereco = Endereco(cep)
+
+        except ValueError:
+            print("Cep Inválido")
+            return
 
         try:
+
             anuncio = Anuncio(vendedor.produtos[num_produto - 1], preco, endereco.cidade, endereco.uf, vendedor)
         except IndexError:
             print("Espaço de produto Vazio.")
+            return
         
         else:
             try:
